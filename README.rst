@@ -22,7 +22,7 @@ Python wrapper for cisco's olt boxes commands executed via ssh
 Usage
 -----
 
-Get raw output from command as during interactive session. Example usage in
+Get raw output for command as during interactive session. Example usage in
 python3 and since output is in bytes it needs to be decoded to utf-8.
 
 .. code-block:: python
