@@ -62,7 +62,8 @@ class OltClient:
         )
         shell = ssh_client.invoke_shell()
         shell.settimeout(self.recv_timeout)
-        exec_command(shell, '')
+        if recv_msg:
+            exec_command(shell, '')
         return shell
 
     def connect(self):
