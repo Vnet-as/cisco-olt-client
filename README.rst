@@ -10,6 +10,12 @@ cisco_olt_client
    :target: https://codecov.io/gh/Vnet-as/cisco-olt-client
    :alt: Test coverage status from latest build
 
+
+.. image:: https://pyup.io/repos/github/vnet-as/cisco-olt-client/shield.svg
+   :target: https://pyup.io/repos/github/vnet-as/cisco-olt-client/
+   :alt: Updates
+
+
 Python wrapper for cisco's olt boxes commands executed via ssh
 
 
@@ -69,6 +75,24 @@ Run tests:
 .. code-block:: bash
 
     $ tox
+
+
+Dependencies
+============
+
+- `paramiko (2.1.1) <http://www.paramiko.org/>`_
+
+
+Compatibility
+=============
+
+Tests run against Python versions:
+
+- 2.7
+- 3.4
+- 3.5
+- 3.5-dev
+- 3.6-dev
 
 
 Licence
