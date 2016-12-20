@@ -19,7 +19,8 @@ class OltClient:
         auto_connect=True,
         recv_timeout=1,
         recv_chunk_size=4096,
-        missing_host_key_policy_cls=AutoAddPolicy
+        missing_host_key_policy_cls=AutoAddPolicy,
+        ssh_connection_options=None
     ):
         self.hostname = hostname
         self.username = username
@@ -30,6 +31,11 @@ class OltClient:
         self.missing_host_key_policy_cls = missing_host_key_policy_cls
         self.shell = None
         self.ssh_client = None
+        self.ssh_connection_options = dict(
+            look_for_keys=False,
+            allow_agent=False,
+            timeout=5
+        ) if ssh_connection_options is None else ssh_connection_options
 
     def get_ssh_client(self):
         '''
@@ -56,9 +62,7 @@ class OltClient:
             self.hostname,
             username=self.username,
             password=self.password,
-            look_for_keys=False,
-            allow_agent=False,
-            timeout=5
+            **self.ssh_connection_options
         )
         shell = ssh_client.invoke_shell()
         shell.settimeout(self.recv_timeout)
