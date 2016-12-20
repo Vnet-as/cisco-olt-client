@@ -6,10 +6,11 @@ setuptools.setup(
     url="https://github.com/Vnet-as/cisco-olt-client",
     author="Michal Kuffa",
     author_email="michal.kuffa@gmail.com",
-    description="Python wrapper for cisco's olt boxes commands executed via ssh",
+    description=(
+        "Python wrapper for cisco's olt boxes commands executed via ssh"),
     long_description=open('README.rst').read(),
     packages=setuptools.find_packages(),
-    install_requires=[],
+    install_requires=['paramiko>=2.1.1'],
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Programming Language :: Python',
