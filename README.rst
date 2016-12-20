@@ -5,6 +5,11 @@ cisco_olt_client
    :target: https://travis-ci.org/Vnet-as/cisco-olt-client
    :alt: Latest Travis CI build status
 
+
+.. image:: https://codecov.io/gh/Vnet-as/cisco-olt-client/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/Vnet-as/cisco-olt-client
+   :alt: Test coverage status from latest build
+
 Python wrapper for cisco's olt boxes commands executed via ssh
 
 
@@ -16,12 +21,9 @@ python3 and since output is in bytes it needs to be decoded to utf-8.
 
 .. code-block:: python
 
-    Python 3.5.2 (default, Aug 20 2016, 15:02:10)
-    [GCC 4.9.2] on linux
-    Type "help", "copyright", "credits" or "license" for more information.
     >>> from cisco_olt_client.client import OltClient
     >>>
-    >>> with OltClient('192.168.35.50', 'admin', 'LedaMetis2012') as client:
+    >>> with OltClient('host', 'user', 'password') as client:
     ...     command_output = client.raw_exec_command('/dhcp/global/show')
     ...     for line in command_output.splitlines():
     ...         print(line.decode('utf-8'))
