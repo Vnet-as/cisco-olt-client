@@ -117,4 +117,4 @@ def exec_command(
             if shell.closed:
                 raise ConnectionError('Connection to OTL failed')
             break
-    return buffer.getvalue()
+    return buffer if output_as_file else buffer.getvalue()
