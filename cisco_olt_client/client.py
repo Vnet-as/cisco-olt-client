@@ -66,6 +66,8 @@ class OltClient:
         return shell
 
     def connect(self):
+        # the ssh_client reference is needed otherwise it will get garbage
+        # collected and causing the shell to close immediately
         self.ssh_client = self.get_ssh_client()
         self.shell = self.get_olt_shell(self.ssh_client)
 
@@ -81,6 +83,13 @@ class OltClient:
                 raise ConnectionError(
                     'Connectio not ready and auto_connect flag is False')
         return exec_command(self.shell, cmd, **exec_options)
+
+    def __enter__(self):
+        self.connect()
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.disconnect()
 
 
 def exec_command(
