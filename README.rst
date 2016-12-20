@@ -39,11 +39,37 @@ python3 and since output is in bytes it needs to be decoded to utf-8.
 Installation
 ------------
 
-Requirements
-^^^^^^^^^^^^
+:TODO: Upload to pypi :)
 
-Compatibility
--------------
+.. code-block:: bash
+
+    $ pip install -r https://raw.githubusercontent.com/Vnet-as/cisco-olt-client/master/requirements.txt
+    $ pip install -e git+https://github.com/Vnet-as/cisco-olt-client.git#egg=cisco_olt_client
+
+Development
+-----------
+
+Create and activate `virtualenv <https://virtualenv.pypa.io/en/stable/>`_ then proceed with:
+
+.. code-block:: bash
+
+    $ pip install -r requirements.txt
+
+
+For running tests you will need `tox <https://tox.readthedocs.io/en/latest/>`_ and everything in ``test-requirements.txt``:
+
+.. code-block:: bash
+
+    $ pip install tox
+    $ pip install -r test-requirements.txt
+
+
+Run tests:
+
+.. code-block:: bash
+
+    $ tox
+
 
 Licence
 -------
