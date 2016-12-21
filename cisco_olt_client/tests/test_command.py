@@ -1,4 +1,11 @@
+from cisco_olt_client.command import arg2tuple
 from cisco_olt_client.command import Command
+
+
+def test_arg2tuple():
+    assert arg2tuple('--onuID=23') == ('onuID', '23')
+
+
 
 
 def test_simple_compile():
