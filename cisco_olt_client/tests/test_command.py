@@ -1,6 +1,8 @@
+import pytest
 import shlex
+from cisco_olt_client.exceptions import CommandNotExecuted
 from cisco_olt_client.command import arg2tuple, args2mapping
-from cisco_olt_client.command import Command
+from cisco_olt_client.command import Command, NEWLINE_SEP
 
 
 def test_args2mapping():
@@ -45,3 +47,29 @@ def test_simple_compile():
 
     cmd = Command('cmd', ['--arg1=val1', '--arg2=val2'])
     assert cmd.compile() == cmd_str
+
+
+def test_execute_error():
+    class ClientMock:
+        def raw_exec_command(self, *args, **kwargs):
+            return b'\r\nError\r\n'
+    cmd = Command('cmd')
+    cmd.execute(ClientMock())
+    assert cmd.error
+    assert not cmd.warning
+
+def test_execute_warrning():
+    class ClientMock:
+        def raw_exec_command(self, *args, **kwargs):
+            return b'\r\nWarning\r\n'
+    cmd = Command('cmd')
+    cmd.execute(ClientMock())
+    assert not cmd.error
+    assert cmd.warning
+
+def test_raise_not_executed():
+    cmd = Command('cmd')
+    with pytest.raises(CommandNotExecuted):
+        cmd.error
+    with pytest.raises(CommandNotExecuted):
+        cmd.warning
