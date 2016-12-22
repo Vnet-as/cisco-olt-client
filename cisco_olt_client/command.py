@@ -1,3 +1,4 @@
+import re
 import shlex
 import collections
 
@@ -5,6 +6,24 @@ try:
     str_t = basestring
 except NameError:
     str_t = str
+
+
+NEWLINE_SEP = '\r\n'
+COLOR_REGEXP = re.compile(r'\x1b[^m]*m')
+
+
+def remove_cli_artifacts(out, sep=NEWLINE_SEP):
+    '''
+    OLT Cli output always include executed command as a first line and next
+    prompt as the last line. This function removes these two artifacts.
+    '''
+    out = out.split(sep, 1)[1]
+    out = out.rsplit(sep, 1)[0]
+    return out
+
+
+def remove_shell_coloring(out):
+    return COLOR_REGEXP.sub('', out)
 
 
 def args2mapping(args, mapping_cls=collections.OrderedDict):
@@ -55,6 +74,7 @@ class Command:
             preserve order of arguments use ordered dict or list of 2-tuples
         :type args: list or dict
         '''
+        self.executed = False
         # save original cmd and args just in case of dragons
         self._cmd = cmd
         self._args = args
@@ -88,3 +108,9 @@ class Command:
 
     def compile(self):
         return " ".join([self.cmd] + self.get_arg_strs())
+
+    def exec(self, client):
+        self.raw_output = client.raw_exec_command(self.compile())
+        self.output = remove_cli_artifacts(
+            remove_shell_coloring(self.raw_output.decode('utf-8')))
+        self.executed = True
