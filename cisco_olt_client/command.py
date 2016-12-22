@@ -2,6 +2,8 @@ import re
 import shlex
 import collections
 
+from cisco_olt_client.exceptions import CommandNotExecuted
+
 try:
     str_t = basestring
 except NameError:
@@ -124,4 +126,8 @@ class Command:
         return self._first_line_status('Warning')
 
     def _first_line_status(self, start_text):
+        if not self.executed:
+            raise CommandNotExecuted(
+                'can\'t determine `%s` state because command was not executed yet' % (
+                start_text))
         return self.output.split(NEWLINE_SEP, 1)[0].strip().startswith(start_text)
