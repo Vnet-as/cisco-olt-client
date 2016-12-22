@@ -109,7 +109,7 @@ class Command:
     def compile(self):
         return " ".join([self.cmd] + self.get_arg_strs())
 
-    def exec(self, client):
+    def execute(self, client):
         self.raw_output = client.raw_exec_command(self.compile())
         self.output = remove_cli_artifacts(
             remove_shell_coloring(self.raw_output.decode('utf-8')))
