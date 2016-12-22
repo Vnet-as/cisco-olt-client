@@ -19,9 +19,7 @@ def remove_cli_artifacts(out, sep=NEWLINE_SEP):
     OLT Cli output always include executed command as a first line and next
     prompt as the last line. This function removes these two artifacts.
     '''
-    out = out.split(sep, 1)[1]
-    out = out.rsplit(sep, 1)[0]
-    return out
+    return out.split(sep, 1)[1].rsplit(sep, 1)[0]
 
 
 def remove_shell_coloring(out):
