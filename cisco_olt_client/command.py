@@ -114,3 +114,14 @@ class Command:
         self.output = remove_cli_artifacts(
             remove_shell_coloring(self.raw_output.decode('utf-8')))
         self.executed = True
+
+    @property
+    def error(self):
+        self._first_line_status('Error')
+
+    @property
+    def error(self):
+        self._first_line_status('Warning')
+
+    def _first_line_status(self, start_text):
+        return self.output.split(NEWLINE_SEP, 1)[0].strip().startswith(start_text)
