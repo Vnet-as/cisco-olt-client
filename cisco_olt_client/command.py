@@ -126,6 +126,6 @@ class Command:
     def _first_line_status(self, start_text):
         if not self.executed:
             raise CommandNotExecuted(
-                'can\'t determine `%s` state because command was not executed yet' % (
+                'can\'t determine `%s` result because command was not executed yet' % (
                 start_text))
         return self.output.split(NEWLINE_SEP, 1)[0].strip().startswith(start_text)
