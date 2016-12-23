@@ -63,7 +63,8 @@ def test_execute_warrning():
         def raw_exec_command(self, *args, **kwargs):
             return b'\r\nWarning\r\n'
     cmd = Command('cmd')
-    cmd.execute(ClientMock())
+    res = cmd.execute(ClientMock())
+    assert cmd is res
     assert not cmd.error
     assert cmd.warning
 
