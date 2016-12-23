@@ -6,6 +6,7 @@ except ImportError:
 
 from paramiko.client import SSHClient, AutoAddPolicy
 
+from cisco_olt_client.command import Command
 from cisco_olt_client.exceptions import ConnectionError
 
 
@@ -79,6 +80,27 @@ class OltClient:
     def disconnect(self):
         self.shell.close()
         self.ssh_client.close()
+
+    def execute(self, cmd, args=None):
+        '''
+        Use the client to execute given command
+
+        If given `cmd` is already instance of
+        :class:`~cisco_olt_client.command.Command` it'll be executed using the
+        clien, otherwise `cmd` and `args` will be used to create an instance
+        for you.
+
+        :param cmd: Command to execute
+        :type cmd: :class:`~cisco_olt_client.command.Command` or str
+
+        :param args: Additional command arguments. In python2, if you need to
+            preserve order of arguments use ordered dict or list of 2-tuples
+        :type args: list or dict
+        '''
+        if not instance(cmd, Command):
+            cmd = Command(cmd, args=args)
+        return cmd.execute(self)
+
 
     def raw_exec_command(self, cmd, **exec_options):
         if self.shell is None:
