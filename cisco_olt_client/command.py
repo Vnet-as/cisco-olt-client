@@ -114,6 +114,7 @@ class Command:
         self.output = remove_cli_artifacts(
             remove_shell_coloring(self.raw_output.decode('utf-8')))
         self.executed = True
+        return self
 
     @property
     def error(self):
