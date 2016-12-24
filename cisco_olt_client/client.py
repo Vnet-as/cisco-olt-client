@@ -39,9 +39,7 @@ class OltClient:
         ) if ssh_connection_options is None else ssh_connection_options
 
     def get_ssh_client(self):
-        '''
-        Prepare default ssh client and set missing host key policy
-        '''
+        '''Prepare default ssh client and set missing host key policy'''
         ssh_client = SSHClient()
         ssh_client.set_missing_host_key_policy(
             self.missing_host_key_policy_cls())
@@ -72,12 +70,14 @@ class OltClient:
         return shell
 
     def connect(self):
+        '''Initialize interactive shell'''
         # the ssh_client reference is needed otherwise it will get garbage
         # collected and causing the shell to close immediately
         self.ssh_client = self.get_ssh_client()
         self.shell = self.get_olt_shell(self.ssh_client)
 
     def disconnect(self):
+        '''Close interactive shell channel and ssh client as well'''
         self.shell.close()
         self.ssh_client.close()
 
@@ -100,7 +100,6 @@ class OltClient:
         if not instance(cmd, Command):
             cmd = Command(cmd, args=args)
         return cmd.execute(self)
-
 
     def raw_exec_command(self, cmd, **exec_options):
         if self.shell is None:
