@@ -97,7 +97,7 @@ class OltClient:
             preserve order of arguments use ordered dict or list of 2-tuples
         :type args: list or dict
         '''
-        if not instance(cmd, Command):
+        if not isinstance(cmd, Command):
             cmd = Command(cmd, args=args)
         return cmd.execute(self)
 
