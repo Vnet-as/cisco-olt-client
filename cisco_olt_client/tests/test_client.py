@@ -40,4 +40,3 @@ def test_exec_command(mocker):
     shell.recv.side_effect = [cmd_out, socket.timeout]
     exec_command(shell, cmd, new_line=False)
     shell.send.assert_called_with(cmd)
-
