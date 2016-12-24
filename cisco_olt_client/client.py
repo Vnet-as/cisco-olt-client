@@ -87,7 +87,7 @@ class OltClient:
 
         If given `cmd` is already instance of
         :class:`~cisco_olt_client.command.Command` it'll be executed using the
-        clien, otherwise `cmd` and `args` will be used to create an instance
+        client, otherwise `cmd` and `args` will be used to create an instance
         for you.
 
         :param cmd: Command to execute
@@ -129,6 +129,19 @@ def exec_command(
     new_line_char='\n'
 ):
     '''
+    Use `shell` to execute given command command string `cmd`
+
+    Receiving or rather determining commands output via interactive shell is a
+    bit tricky. This function reads from the shell channel until
+    :exc:`socket.timeout` is raised, then check if channel is still open, if
+    so, received data is considered command's output. If on
+    :exc:`socket.timeout` channel is closed, most probably connection error
+    occured. Anyway, this is not deterministic.
+
+    Timeout on receiving socket is set with :meth:`Channel.settimeout`.
+    `More info <http://docs.paramiko.org/en/2.0/api/channel.html#paramiko.channel.Channel.settimeout>`_.
+
+
     :param shell: :class:`~parmiko.channel.Channel` representation of OLT linux
 	interactive shell, for more information see
 	`paramiko' documentation <http://docs.paramiko.org/en/stable/api/client.html>`_
