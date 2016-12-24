@@ -137,10 +137,31 @@ def exec_command(
     :param cmd: Command with arguments to execute
     :type cmd: str
 
-    :param buffer: file like object where command output is written
+    :param buffer: File-like object where command output is written, if `None`,
+        `StringIO` is used by default
+    :type buffer: file-like object or None
+
+    :param recv_chunk_size: Reads from `shell` by chunks of the size
+        `recv_chunk_size`, default is 4096
+    :type recv_chunk_size: int
+
+    :param output_as_file: If set to `True`, result will be file-like object
+        used as a buffer for command's output
+    :type output_as_file: bool
+
+    :param new_line: If set to `True`, `new_line_char` is appended to given
+        command string, carriage return
+    :type new_line: bool
+
+    :param new_line_char: What character is appended to given command if
+        `new_line` is `True`
+    :type new_line_char: str
+
+    :returns: Command's output either as a string or as file-like object if
+        `output_as_file` is `True`
     '''
     buffer = StringIO() if buffer is None else buffer
-    if not cmd.endswith(new_line_char):
+    if new_line and not cmd.endswith(new_line_char):
         cmd += new_line_char
     shell.send(cmd)
     while True:
