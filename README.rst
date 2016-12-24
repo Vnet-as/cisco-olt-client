@@ -38,7 +38,7 @@ Get global dhcp config:
 
 
 
- Get type for each of configured services:
+Get type for each of configured services:
 
 .. code-block:: python
 
