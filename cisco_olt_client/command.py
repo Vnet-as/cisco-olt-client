@@ -22,21 +22,18 @@ def remove_cli_artifacts(out, sep=NEWLINE_SEP):
     return out.split(sep, 1)[1].rsplit(sep, 1)[0]
 
 
-def remove_shell_coloring(out):
-    return COLOR_REGEXP.sub('', out)
+def remove_shell_coloring(text):
+    '''Removes ANSI coloring sequences from given text'''
+    return COLOR_REGEXP.sub('', text)
 
 
 def args2mapping(args, mapping_cls=collections.OrderedDict):
-    '''
-    Parse list of command line arguments into mapping (ordered by default)
-    '''
+    '''Parse list of command line arguments into mapping (ordered by default)'''
     return mapping_cls([arg2tuple(arg) for arg in args])
 
 
 def arg2tuple(arg):
-    '''
-    Parse string command line argument into name, value tuple
-    '''
+    '''Parse string command line argument into name, value tuple'''
     arg_parts = arg.split('=', 1)
     if len(arg_parts) == 2:
         name, value = arg_parts
