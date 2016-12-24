@@ -22,9 +22,12 @@ Python wrapper for cisco's olt boxes commands executed via ssh
 Usage
 -----
 
+Get global dhcp config:
+
 .. code-block:: python
 
     >>> from cisco_olt_client.client import OltClient
+    >>> from cisco_olt_client.command import Command
     >>>
     >>> with OltClient('host', 'username', 'password') as client:
     ...     cmd = client.execute('/dhcp/global/show')
@@ -32,6 +35,24 @@ Usage
     ...
     Global DHCP circuit ID Template String:
     "$accessnodeid PON $rack/$subrack/$slot/$port:$onuid.$svid"
+
+
+
+ Get type for each of configured services:
+
+.. code-block:: python
+
+    >>> with OltClient('host', 'username', 'password') as client:
+    ...     cmd = client.execute('/services/showconfig')
+    ...     for config_command in map(Command, cmd.output.splitlines()):
+    ...         print(config_command.args['type'])
+    ...
+    mac bridge
+    unicast
+    multicast
+    unicast
+    multicast
+    mac bridge
 
 
 
