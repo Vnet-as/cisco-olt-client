@@ -128,6 +128,17 @@ def exec_command(
     new_line=True,
     new_line_char='\n'
 ):
+    '''
+    :param shell: :class:`~parmiko.channel.Channel` representation of OLT linux
+	interactive shell, for more information see
+	`paramiko' documentation <http://docs.paramiko.org/en/stable/api/client.html>`_
+    :type shell: :class:`~parmiko.channel.Channel`
+
+    :param cmd: Command with arguments to execute
+    :type cmd: str
+
+    :param buffer: file like object where command output is written
+    '''
     buffer = StringIO() if buffer is None else buffer
     if not cmd.endswith(new_line_char):
         cmd += new_line_char
