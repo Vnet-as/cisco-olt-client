@@ -35,3 +35,9 @@ def test_exec_command(mocker):
     shell.recv.side_effect = [cmd_out, socket.timeout]
     cmd = '/remote-wq/onu/showconfig'
     assert exec_command(shell, cmd) == cmd_out
+    shell.send.assert_called_with(cmd + '\n')
+
+    shell.recv.side_effect = [cmd_out, socket.timeout]
+    exec_command(shell, cmd, new_line=False)
+    shell.send.assert_called_with(cmd)
+
