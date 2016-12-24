@@ -1,5 +1,6 @@
 
 from cisco_olt_client.client import OltClient
+from cisco_olt_client.client import exec_command, socket
 
 
 def test_init():
@@ -23,3 +24,14 @@ def test_get_shell(mocker):
     mocker.patch('cisco_olt_client.client.exec_command')
     shell = client.get_olt_shell(ssh_client)
     assert shell
+
+
+def test_exec_command(mocker):
+    shell = mocker.Mock()
+    shell.closed = False
+    shell.send = mocker.Mock()
+    shell.recv = mocker.Mock()
+    cmd_out = b'Vesele Vianoce'
+    shell.recv.side_effect = [cmd_out, socket.timeout]
+    cmd = '/remote-wq/onu/showconfig'
+    assert exec_command(shell, cmd) == cmd_out
